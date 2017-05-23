@@ -1,0 +1,9 @@
+{
+  useTransfersTxt: true,
+  parentStopLinking: true,
+  stationTransfers: true,
+  fetchElevationUS: false,
+  embedRouterConfig: true,
+  maxTransferDistance: 2000,
+  staticParkAndRide: true
+}
