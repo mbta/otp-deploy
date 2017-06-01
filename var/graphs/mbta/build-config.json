@@ -3,7 +3,7 @@
   parentStopLinking: true,
   stationTransfers: true,
   fetchElevationUS: false,
-  embedRouterConfig: true,
+  embedRouterConfig: false,
   maxTransferDistance: 2000,
   staticParkAndRide: true
 }
