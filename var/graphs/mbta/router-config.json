@@ -1,3 +1,18 @@
 {
-  stopClusterMode: "parentStation"
+  "stopClusterMode": "parentStation",
+  "updaters": [
+    {
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://developer.mbta.com/lib/GTRTFS/Alerts/Alerts.pb",
+      "feedId": "1"
+    },
+    {
+      "type": "stop-time-updater",
+      "frequencySec": 10,
+      "sourceType": "gtfs-http",
+      "url": "http://developer.mbta.com/lib/GTRTFS/Alerts/TripUpdates.pb",
+      "feedId": "1"
+    }
+  ]
 }
