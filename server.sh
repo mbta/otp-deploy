@@ -1,2 +1,6 @@
 #!/bin/sh
-java -Xmx4G -jar otp-1.1.0-shaded.jar --build var/graphs/mbta/ --basePath var/ --inMemory
+IN_MEMORY="--inMemory"
+if [ -f "var/graphs/mbta/Graph.obj" ]; then
+    IN_MEMORY=""
+fi
+java -Xmx4G -jar otp-1.2.0-shaded.jar --server --basePath var/ $IN_MEMORY
