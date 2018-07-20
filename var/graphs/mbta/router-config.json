@@ -4,14 +4,14 @@
     {
       "type": "real-time-alerts",
       "frequencySec": 30,
-      "url": "http://developer.mbta.com/lib/GTRTFS/Alerts/Alerts.pb",
+      "url": "https://cdn.mbta.com/realtime/Alerts.pb",
       "feedId": "1"
     },
     {
       "type": "stop-time-updater",
       "frequencySec": 10,
       "sourceType": "gtfs-http",
-      "url": "http://developer.mbta.com/lib/GTRTFS/Alerts/TripUpdates.pb",
+      "url": "https://cdn.mbta.com/realtime/TripUpdates.pb",
       "feedId": "1"
     }
   ]
