@@ -1,5 +1,5 @@
 /mbta_otp.zip
-/us-northeast-latest.osm.pbf
+/*.osm.pbf
 /var/graphs/mbta/Graph.obj
 /var/graphs/mbta/MBTA_GTFS.zip
-/var/graphs/mbta/watershed.pbf
+/var/graphs/mbta/*.pbf
