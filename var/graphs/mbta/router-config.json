@@ -8,6 +8,12 @@
       "feedId": "1"
     },
     {
+      "type": "real-time-alerts-enhanced",
+      "frequencySec": 30,
+      "url": "https://cdn.mbta.com/realtime/Alerts_enhanced.json",
+      "feedId": "1"
+    },
+    {
       "type": "stop-time-updater",
       "frequencySec": 10,
       "sourceType": "gtfs-http",
