@@ -5,7 +5,7 @@
 source /opt/change-java-version.sh
 change-java-version 8
 rm -rf OpenTripPlanner
-git clone git@github.com:mbta/OpenTripPlanner.git
+git clone git@github.com:mbta/OpenTripPlanner.git --depth 1
 pushd OpenTripPlanner
 mvn clean install -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
 popd
