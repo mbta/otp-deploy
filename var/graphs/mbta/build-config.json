@@ -1,7 +1,6 @@
 {
   "useTransfersTxt": true,
   "parentStopLinking": true,
-  "stationTransfers": true,
   "fetchElevationUS": false,
   "embedRouterConfig": false,
   "maxTransferDistance": 2000,
