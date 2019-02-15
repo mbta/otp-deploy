@@ -3,6 +3,6 @@
   "parentStopLinking": true,
   "fetchElevationUS": false,
   "embedRouterConfig": false,
-  "maxTransferDistance": 2000,
+  "maxTransferDistance": 750,
   "staticParkAndRide": true
 }
