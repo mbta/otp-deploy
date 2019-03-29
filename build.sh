@@ -6,7 +6,7 @@ source /opt/change-java-version.sh
 change-java-version 8
 
 rm -rf onebusaway-gtfs-modules
-git clone git@github.com:mbta/onebusaway-gtfs-modules.git -b lev-accessible-transfers --depth 1
+git clone git@github.com:mbta/onebusaway-gtfs-modules.git --depth 1
 pushd onebusaway-gtfs-modules
 mvn clean install -Dmaven.test.skip=true -Dlicense.skip=true
 popd
