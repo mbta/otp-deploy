@@ -2,7 +2,7 @@
   "stopClusterMode": "parentStation",
   "updaters": [
     {
-      "type": "real-time-alerts",
+      "type": "real-time-alerts-enhanced",
       "frequencySec": 30,
       "url": "https://cdn.mbta.com/realtime/Alerts_enhanced.json",
       "feedId": "1"
