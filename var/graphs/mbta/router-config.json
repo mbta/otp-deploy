@@ -4,12 +4,6 @@
     {
       "type": "real-time-alerts",
       "frequencySec": 30,
-      "url": "https://cdn.mbta.com/realtime/Alerts.pb",
-      "feedId": "1"
-    },
-    {
-      "type": "real-time-alerts-enhanced",
-      "frequencySec": 30,
       "url": "https://cdn.mbta.com/realtime/Alerts_enhanced.json",
       "feedId": "1"
     },
