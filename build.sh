@@ -12,7 +12,7 @@ mvn clean install -Dmaven.test.skip=true -Dlicense.skip=true
 popd
 
 rm -rf OpenTripPlanner
-git clone git@github.com:mbta/OpenTripPlanner.git -b lev-sort-gtfs-files --depth 1
+git clone git@github.com:mbta/OpenTripPlanner.git --depth 1
 pushd OpenTripPlanner
 mvn clean install -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
 popd
