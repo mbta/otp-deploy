@@ -1,6 +1,5 @@
 /mbta_otp.zip
-/*.osm.pbf
 /var/graphs/mbta/Graph.obj
-/var/graphs/mbta/MBTA_GTFS.zip
+/var/graphs/mbta/*.zip
 /var/graphs/mbta/*.pbf
 /.idea

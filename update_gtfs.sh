@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# it's important for MBTA_GFTS to be first file in the folder,
+# it's important for google_transit.zip to be first file in the folder,
 # otherwise realtime alerts won't work: https://github.com/mbta/OpenTripPlanner/pull/8
 
 declare -a feeds=("https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip"
