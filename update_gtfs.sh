@@ -10,7 +10,8 @@ declare -a feeds=("https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip"
                   "http://data.trilliumtransit.com/gtfs/capeann-ma-us/capeann-ma-us.zip"
                   "http://data.trilliumtransit.com/gtfs/capecod-ma-us/capecod-ma-us.zip"
                   "http://data.trilliumtransit.com/gtfs/gatra-ma-us/gatra-ma-us.zip"
-                  "http://data.trilliumtransit.com/gtfs/lowell-ma-us/lowell-ma-us.zip")
+                  "http://data.trilliumtransit.com/gtfs/lowell-ma-us/lowell-ma-us.zip"
+                  "http://vc.mwrta.com/gtfs/google_transit.zip")
 
 count=${#feeds[@]}
 
