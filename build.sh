@@ -14,7 +14,7 @@ popd
 rm -rf OpenTripPlanner
 git clone git@github.com:mbta/OpenTripPlanner.git --depth 1
 pushd OpenTripPlanner
-mvn clean install -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
+mvn clean install -Dgpg.skip -Dmaven.javadoc.skip=true
 popd
 
 cp ./OpenTripPlanner/target/otp-1.4.0-SNAPSHOT-shaded.jar .
