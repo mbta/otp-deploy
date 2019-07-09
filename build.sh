@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# ensure we use Java 8; other versions have an issue building the graph:
-# https://groups.google.com/forum/#!topic/opentripplanner-users/pvtm3BSyS9g
-source /opt/change-java-version.sh
-change-java-version 8
-
 pushd OpenTripPlanner
 mvn install -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
 popd
