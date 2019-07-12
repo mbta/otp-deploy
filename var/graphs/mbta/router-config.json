@@ -5,7 +5,8 @@
       "type": "real-time-alerts-enhanced",
       "frequencySec": 30,
       "url": "https://cdn.mbta.com/realtime/Alerts_enhanced.json",
-      "feedId": "1"
+      "feedId": "1",
+      "blacklist": ["320037", "315526", "321182", "317383", "319230"]
     },
     {
       "type": "stop-time-updater",
