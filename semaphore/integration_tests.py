@@ -9,6 +9,20 @@ SAVED_SEARCH = "Top 10 trip plans %2B 10 latest trip plans"
 OTP_DEV = "https://dev.otp.mbtace.com"
 OTP_PROD = "https://prod.otp.mbtace.com"
 
+PREDEFINED_PLANS = [
+    # Airport shuttles 1
+    {"Terminal E - Arrivals Level::42.369344,-71.020238", "Wood Island::42.37964,-71.022865"},
+
+    # Airport shuttles 2
+    {"Assembly::42.392811,-71.077257", "Terminal C - Departures Level::42.366635,-71.017167"},
+
+    # Connection between bus routes in the middle of the routes
+    {"Lexington St @ Willow St::42.4732,-71.17253", "Main St, Woburn, MA, USA::42.4928705,-71.1544787"},
+
+    # Logan express
+    {"Back Bay::42.34735,-71.075727", "Logan International Airport, Boston, MA, USA::42.3658907,-71.017547"}
+]
+
 
 def splunk_json_request(path):
     return requests.get(f"{SPLUNK_HOST}{path}",
@@ -59,7 +73,7 @@ def get_trip_plans(environment, from_place, to_place, trip_date, arrive_by):
         "locale": "en",
         "mode": "TRAM,SUBWAY,FERRY,RAIL,BUS,WALK",
         "walkReluctance": "5",
-        "arriveBy": "true" if arrive_by else "false"
+        "arriveBy": "true" if arrive_by else "false",
     }
 
     return requests.get(url, params).json()
@@ -91,7 +105,7 @@ if __name__ == "__main__":
     sname = splunk_get_search_name()
     trips = splunk_get_search_results(sname)
 
-    for fromPlace, toPlace in trips:
+    for fromPlace, toPlace in PREDEFINED_PLANS + trips:
         for date in get_testing_dates():
             arriveBy = bool(getrandbits(1))
 
