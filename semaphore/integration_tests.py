@@ -93,17 +93,20 @@ def compare_plans(plan1, plan2):
                 assert j1 == j2
 
         print("[PASS] Plans are identical, moving on\n")
+        return True
 
-    except AssertionError as ex:
+    except AssertionError:
         print("[FAIL] Plans are different:\n")
         print(f"  First plan: {json.dumps(plan1, sort_keys=True)}\n\n\n")
         print(f"  First plan: {json.dumps(plan2, sort_keys=True)}\n\n\n")
-        raise ex
+        return False
 
 
 if __name__ == "__main__":
     sname = splunk_get_search_name()
     trips = splunk_get_search_results(sname)
+
+    has_errors = False
 
     for fromPlace, toPlace in PREDEFINED_PLANS + trips:
         for date in get_testing_dates():
@@ -114,6 +117,12 @@ if __name__ == "__main__":
             prod_plans = get_trip_plans("prod", fromPlace, toPlace, date, arriveBy)
             dev_plans = get_trip_plans("dev", fromPlace, toPlace, date, arriveBy)
 
-            compare_plans(prod_plans, dev_plans)
+            if not compare_plans(prod_plans, dev_plans):
+                has_errors = True
 
-    print("Test completed successfully")
+    if has_errors:
+        print("Tests completed with errors")
+        exit(1)
+    else:
+        print("Tests completed successfully")
+        exit(0)
