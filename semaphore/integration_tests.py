@@ -97,8 +97,8 @@ def compare_plans(plan1, plan2):
 
     except AssertionError:
         print("[FAIL] Plans are different:\n")
-        print(f"  First plan: {json.dumps(plan1, sort_keys=True)}\n\n\n")
-        print(f"  First plan: {json.dumps(plan2, sort_keys=True)}\n\n\n")
+        print(f"First plan: {json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
+        print(f"Second plan: {json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
         return False
 
 
