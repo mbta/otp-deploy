@@ -1,5 +1,6 @@
 #/usr/bin/env python
 from datetime import date, time, datetime, timedelta
+from os import getenv
 from random import randrange, getrandbits
 import json
 import requests
@@ -27,7 +28,7 @@ PREDEFINED_PLANS = [
 def splunk_json_request(path):
     return requests.get(f"{SPLUNK_HOST}{path}",
                         params={"output_mode": "json"},
-                        auth=("lboyarsky@mbta.com", "XXX"),
+                        auth=(getenv("SPLUNK_LOGIN", ""), getenv("SPLUNK_PASSWORD", "")),
                         verify=False).json()
 
 
