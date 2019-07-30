@@ -88,6 +88,11 @@ def compare_plans(plan1, plan2):
             assert ("itineraries" in plan1.get("plan")) == ("itineraries" in plan2.get("plan"))
 
             if "itineraries" in plan1.get("plan"):
+                # keys_to_delete = ["flexDrtAdvanceBookMin", "boardAlightType", "distance", "walkDistance", "endTime", "duration", "arrival"]
+                keys_to_delete = []
+                plan1 = _delete_json_keys(plan1, keys_to_delete)
+                plan2 = _delete_json_keys(plan2, keys_to_delete)
+
                 j1 = json.dumps(plan1.get("plan").get("itineraries"), sort_keys=True)
                 j2 = json.dumps(plan2.get("plan").get("itineraries"), sort_keys=True)
 
@@ -97,10 +102,30 @@ def compare_plans(plan1, plan2):
         return True
 
     except AssertionError:
-        print("[FAIL] Plans are different:\n")
-        print(f"First plan: {json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
-        print(f"Second plan: {json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
+        print("[FAIL] Plans are different:")
+
+        dt = datetime.now().strftime("%d%b%Y%H%M%S")
+
+        filename = f"{dt}-prod.json"
+        with open (filename, "w") as f:
+            json.dump(plan1, f, sort_keys=True, indent=2)
+            print(f"First plan saved to {filename}")
+
+        filename = f"{dt}-dev.json"
+        with open(filename, "w") as f:
+            json.dump(plan2, f, sort_keys=True, indent=2)
+            print(f"Second plan saved to {filename}")
+
+        print("\n\n")
         return False
+
+
+def _delete_json_keys(json, keys):
+    if not isinstance(json, (dict, list)):
+        return json
+    if isinstance(json, list):
+        return [_delete_json_keys(v, keys) for v in json]
+    return {k: _delete_json_keys(v, keys) for k, v in json.items() if k not in keys}
 
 
 if __name__ == "__main__":
