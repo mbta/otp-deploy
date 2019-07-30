@@ -1,5 +1,6 @@
 {
   "stopClusterMode": "parentStation",
+  "useFlexService": "true",
   "updaters": [
     {
       "type": "real-time-alerts-enhanced",
