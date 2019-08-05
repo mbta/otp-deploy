@@ -1,11 +1,10 @@
 #/usr/bin/env python
 from datetime import date, time, datetime, timedelta
-from os import getenv
 from random import randrange, getrandbits
+import boto3
 import json
 import requests
 
-SPLUNK_HOST = "https://mbta.splunkcloud.com:8089"
 SAVED_SEARCH = "Top 10 trip plans %2B 10 latest trip plans"
 OTP_DEV = "https://dev.otp.mbtace.com"
 OTP_PROD = "https://prod.otp.mbtace.com"
@@ -26,10 +25,15 @@ PREDEFINED_PLANS = [
 
 
 def splunk_json_request(path):
-    return requests.get(f"{SPLUNK_HOST}{path}",
-                        params={"output_mode": "json"},
-                        auth=(getenv("SPLUNK_LOGIN", ""), getenv("SPLUNK_PASSWORD", "")),
-                        verify=False).json()
+    proxy_lambda = boto3.client("lambda")
+    response = proxy_lambda.invoke(
+        FunctionName='splunk-proxy',
+        InvocationType='RequestResponse',
+        Payload=json.dumps({
+            "path": path
+        }).encode('utf-8'),
+    )
+    return json.loads(response["Payload"].read()).get("body")
 
 
 def splunk_get_search_name():
@@ -80,7 +84,17 @@ def get_trip_plans(environment, from_place, to_place, trip_date, arrive_by):
     return requests.get(url, params).json()
 
 
-def compare_plans(plan1, plan2):
+# alerts come in random order, which sometimes causes plan comparison to fail
+def sort_alerts(json):
+    plan = json.get("plan")
+    for itinerary in plan.get("itineraries"):
+        for leg in itinerary.get("legs"):
+            alerts = leg.get("alerts")
+            if alerts and len(alerts) > 1:
+                leg["alerts"] = sorted(alerts, key=lambda a: a["alertDescriptionText"])
+
+
+def compare_plans(plan1, plan2, **kwargs):
     try:
         assert ("plan" in plan1) == ("plan" in plan2)
 
@@ -88,44 +102,37 @@ def compare_plans(plan1, plan2):
             assert ("itineraries" in plan1.get("plan")) == ("itineraries" in plan2.get("plan"))
 
             if "itineraries" in plan1.get("plan"):
-                # keys_to_delete = ["flexDrtAdvanceBookMin", "boardAlightType", "distance", "walkDistance", "endTime", "duration", "arrival"]
-                keys_to_delete = []
-                plan1 = _delete_json_keys(plan1, keys_to_delete)
-                plan2 = _delete_json_keys(plan2, keys_to_delete)
+                sort_alerts(plan1)
+                sort_alerts(plan2)
 
                 j1 = json.dumps(plan1.get("plan").get("itineraries"), sort_keys=True)
                 j2 = json.dumps(plan2.get("plan").get("itineraries"), sort_keys=True)
 
                 assert j1 == j2
 
-        print("[PASS] Plans are identical, moving on\n")
+        print("[PASS] Plans are identical\n")
         return True
 
     except AssertionError:
-        print("[FAIL] Plans are different:")
+        print("[FAIL] Plans are different:\n")
 
-        dt = datetime.now().strftime("%d%b%Y%H%M%S")
+        if not kwargs.get("local_run", False):
+            print(f"First plan:\n{json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
+            print(f"Second plan:\n{json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
+        else:
+            dt = datetime.now().strftime("%Y%m%d-%H%M%S%f")
 
-        filename = f"{dt}-prod.json"
-        with open (filename, "w") as f:
-            json.dump(plan1, f, sort_keys=True, indent=2)
-            print(f"First plan saved to {filename}")
+            def save(plan, prefix):
+                filename = f"{dt}-{prefix}.json"
+                with open(filename, "w") as f:
+                    json.dump(plan, f, sort_keys=True, indent=2)
+                    print(f"Plan saved to {filename}")
 
-        filename = f"{dt}-dev.json"
-        with open(filename, "w") as f:
-            json.dump(plan2, f, sort_keys=True, indent=2)
-            print(f"Second plan saved to {filename}")
+            save(plan1, "prod")
+            save(plan2, "dev")
+            print("\n\n")
 
-        print("\n\n")
         return False
-
-
-def _delete_json_keys(json, keys):
-    if not isinstance(json, (dict, list)):
-        return json
-    if isinstance(json, list):
-        return [_delete_json_keys(v, keys) for v in json]
-    return {k: _delete_json_keys(v, keys) for k, v in json.items() if k not in keys}
 
 
 if __name__ == "__main__":
@@ -143,7 +150,7 @@ if __name__ == "__main__":
             prod_plans = get_trip_plans("prod", fromPlace, toPlace, date, arriveBy)
             dev_plans = get_trip_plans("dev", fromPlace, toPlace, date, arriveBy)
 
-            if not compare_plans(prod_plans, dev_plans):
+            if not compare_plans(prod_plans, dev_plans, local_run=False):
                 has_errors = True
 
     if has_errors:
