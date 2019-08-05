@@ -90,7 +90,7 @@ def sort_alerts(json):
     for itinerary in plan.get("itineraries"):
         for leg in itinerary.get("legs"):
             alerts = leg.get("alerts")
-            if alerts and len(alerts) > 1:
+            if alerts:
                 leg["alerts"] = sorted(alerts, key=lambda a: a["alertDescriptionText"])
 
 
@@ -116,10 +116,7 @@ def compare_plans(plan1, plan2, **kwargs):
     except AssertionError:
         print("[FAIL] Plans are different:\n")
 
-        if not kwargs.get("local_run", False):
-            print(f"First plan:\n{json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
-            print(f"Second plan:\n{json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
-        else:
+        if kwargs.get("local_run", False):
             dt = datetime.now().strftime("%Y%m%d-%H%M%S%f")
 
             def save(plan, prefix):
@@ -131,6 +128,9 @@ def compare_plans(plan1, plan2, **kwargs):
             save(plan1, "prod")
             save(plan2, "dev")
             print("\n\n")
+        else:
+            print(f"First plan:\n{json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
+            print(f"Second plan:\n{json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
 
         return False
 
