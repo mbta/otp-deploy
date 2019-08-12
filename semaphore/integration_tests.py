@@ -20,7 +20,10 @@ PREDEFINED_PLANS = [
     {"Lexington St @ Willow St::42.4732,-71.17253", "Main St, Woburn, MA, USA::42.4928705,-71.1544787"},
 
     # Logan express
-    {"Back Bay::42.34735,-71.075727", "Logan International Airport, Boston, MA, USA::42.3658907,-71.017547"}
+    {"Back Bay::42.34735,-71.075727", "Logan International Airport, Boston, MA, USA::42.3658907,-71.017547"},
+
+    # Continuous drop-off
+    {"Wellington::42.40237,-71.077082", "49 Cushing Street, Medford, MA, USA::42.4142089,-71.0968295"}
 ]
 
 
