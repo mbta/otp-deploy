@@ -15,4 +15,4 @@ mvn -Dmaven.repo.local="${M2_CACHE}" clean install -Dmaven.test.skip=true -Dlice
 popd
 
 rm -rf OpenTripPlanner
-git clone git@github.com:mbta/OpenTripPlanner.git --depth 1 -b lev-continuous-boarding
+git clone git@github.com:mbta/OpenTripPlanner.git --depth 1
