@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # ensure we use Java 8; other versions have an issue building the graph:
 # https://groups.google.com/forum/#!topic/opentripplanner-users/pvtm3BSyS9g
