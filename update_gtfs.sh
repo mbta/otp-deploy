@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # it's important for MBTA_GFTS to be first file in the folder,
 # otherwise realtime alerts won't work: https://github.com/mbta/OpenTripPlanner/pull/8

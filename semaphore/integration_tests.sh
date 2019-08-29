@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 export PIPENV_VERBOSITY=-1
 export PIPENV_CACHE_DIR=$SEMAPHORE_CACHE_DIR
