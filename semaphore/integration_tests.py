@@ -3,6 +3,7 @@ from datetime import date, time, datetime, timedelta
 from random import randrange, getrandbits
 import boto3
 import json
+import jsondiff
 import requests
 
 SAVED_SEARCH = "Top 10 trip plans %2B 10 latest trip plans"
@@ -98,6 +99,8 @@ def sort_alerts(json):
 
 
 def compare_plans(plan1, plan2, **kwargs):
+    diff = {}
+
     try:
         assert ("plan" in plan1) == ("plan" in plan2)
 
@@ -108,16 +111,14 @@ def compare_plans(plan1, plan2, **kwargs):
                 sort_alerts(plan1)
                 sort_alerts(plan2)
 
-                j1 = json.dumps(plan1.get("plan").get("itineraries"), sort_keys=True)
-                j2 = json.dumps(plan2.get("plan").get("itineraries"), sort_keys=True)
-
-                assert j1 == j2
+                diff = jsondiff.diff(plan1.get("plan").get("itineraries"), plan2.get("plan").get("itineraries"))
+                assert diff == {}
 
         print("[PASS] Plans are identical\n")
         return True
 
     except AssertionError:
-        print("[FAIL] Plans are different:\n")
+        print("[FAIL] Plans are different:")
 
         if kwargs.get("local_run", False):
             dt = datetime.now().strftime("%Y%m%d-%H%M%S%f")
@@ -130,10 +131,10 @@ def compare_plans(plan1, plan2, **kwargs):
 
             save(plan1, "prod")
             save(plan2, "dev")
-            print("\n\n")
         else:
-            print(f"First plan:\n{json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
-            print(f"Second plan:\n{json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
+            print(diff)
+
+        print("\n")
 
         return False
 
