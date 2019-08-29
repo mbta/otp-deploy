@@ -12,9 +12,3 @@ for service in $SERVICES; do
     sudo service $service stop
 done
 killall Xvfb
-
-# Add more swap memory. Default is ~200m, make it 5G
-sudo swapoff -a
-sudo dd if=/dev/zero of=/swapfile bs=1M count=5120
-sudo mkswap /swapfile
-sudo swapon /swapfile
