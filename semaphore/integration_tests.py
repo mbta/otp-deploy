@@ -110,7 +110,7 @@ def process_plan(plan):
                 if key == "stopId":
                     result[key] = re.sub(r"(\w+:temp_0)\.\d+", r"\1-random", value)
                 else:
-                    result[key] = value
+                    result[key] = remove_random_stop_ids(value)
             return result
         else:
             return json
