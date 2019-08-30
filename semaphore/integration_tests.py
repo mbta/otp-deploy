@@ -111,7 +111,11 @@ def compare_plans(plan1, plan2, **kwargs):
                 sort_alerts(plan1)
                 sort_alerts(plan2)
 
-                diff = jsondiff.diff(plan1.get("plan").get("itineraries"), plan2.get("plan").get("itineraries"))
+                diff = jsondiff.diff(
+                    plan1.get("plan").get("itineraries"),
+                    plan2.get("plan").get("itineraries"),
+                    syntax='symmetric',
+                )
                 assert diff == {}
 
         print("[PASS] Plans are identical\n")
@@ -119,6 +123,7 @@ def compare_plans(plan1, plan2, **kwargs):
 
     except AssertionError:
         print("[FAIL] Plans are different:")
+        print(json.dumps(diff, indent=2))
 
         if kwargs.get("local_run", False):
             dt = datetime.now().strftime("%Y%m%d-%H%M%S%f")
@@ -131,8 +136,6 @@ def compare_plans(plan1, plan2, **kwargs):
 
             save(plan1, "prod")
             save(plan2, "dev")
-        else:
-            print(diff)
 
         print("\n")
 
