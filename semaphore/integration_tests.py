@@ -3,6 +3,8 @@ from datetime import date, time, datetime, timedelta
 from random import randrange, getrandbits
 import boto3
 import json
+import jsondiff
+import re
 import requests
 
 SAVED_SEARCH = "Top 10 trip plans %2B 10 latest trip plans"
@@ -87,17 +89,40 @@ def get_trip_plans(environment, from_place, to_place, trip_date, arrive_by):
     return requests.get(url, params).json()
 
 
-# alerts come in random order, which sometimes causes plan comparison to fail
-def sort_alerts(json):
-    plan = json.get("plan")
-    for itinerary in plan.get("itineraries"):
-        for leg in itinerary.get("legs"):
-            alerts = leg.get("alerts")
-            if alerts:
-                leg["alerts"] = sorted(alerts, key=lambda a: a["alertDescriptionText"])
+def process_plan(plan):
+    # alerts come in random order, which sometimes causes plan comparison to fail
+    def sort_alerts(json):
+        plan = json.get("plan")
+        for itinerary in plan.get("itineraries"):
+            for leg in itinerary.get("legs"):
+                alerts = leg.get("alerts")
+                if alerts:
+                    leg["alerts"] = sorted(alerts, key=lambda a: a["alertDescriptionText"])
+        return json
+
+    # temporary stops have random IDs
+    def remove_random_stop_ids(json):
+        if isinstance(json, list):
+            return [remove_random_stop_ids(j) for j in json]
+        elif isinstance(json, dict):
+            result = {}
+            for key, value in json.items():
+                if key == "stopId":
+                    result[key] = re.sub(r"(\w+:temp_0)\.\d+", r"\1-random", value)
+                else:
+                    result[key] = remove_random_stop_ids(value)
+            return result
+        else:
+            return json
+
+    plan = sort_alerts(plan)
+    plan = remove_random_stop_ids(plan)
+    return plan
 
 
 def compare_plans(plan1, plan2, **kwargs):
+    diff = {}
+
     try:
         assert ("plan" in plan1) == ("plan" in plan2)
 
@@ -105,19 +130,22 @@ def compare_plans(plan1, plan2, **kwargs):
             assert ("itineraries" in plan1.get("plan")) == ("itineraries" in plan2.get("plan"))
 
             if "itineraries" in plan1.get("plan"):
-                sort_alerts(plan1)
-                sort_alerts(plan2)
+                plan1 = process_plan(plan1)
+                plan2 = process_plan(plan2)
 
-                j1 = json.dumps(plan1.get("plan").get("itineraries"), sort_keys=True)
-                j2 = json.dumps(plan2.get("plan").get("itineraries"), sort_keys=True)
-
-                assert j1 == j2
+                diff = jsondiff.diff(
+                    plan1.get("plan").get("itineraries"),
+                    plan2.get("plan").get("itineraries"),
+                    syntax='symmetric',
+                )
+                assert diff == {}
 
         print("[PASS] Plans are identical\n")
         return True
 
     except AssertionError:
-        print("[FAIL] Plans are different:\n")
+        print("[FAIL] Plans are different:")
+        print(json.dumps(diff, indent=2))
 
         if kwargs.get("local_run", False):
             dt = datetime.now().strftime("%Y%m%d-%H%M%S%f")
@@ -130,10 +158,8 @@ def compare_plans(plan1, plan2, **kwargs):
 
             save(plan1, "prod")
             save(plan2, "dev")
-            print("\n\n")
-        else:
-            print(f"First plan:\n{json.dumps(plan1, sort_keys=True, indent=2)}\n\n\n")
-            print(f"Second plan:\n{json.dumps(plan2, sort_keys=True, indent=2)}\n\n\n")
+
+        print("\n")
 
         return False
 
