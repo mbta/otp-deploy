@@ -68,7 +68,7 @@ dotcom `.envrc` to use the docker image end to end locally.
 ## Deploy
 Deploys to prod happen automatically when any changes are merged into `master`. You can manually
 perform a dev deploy of any feature branch using the
-[deploy workflow](https://github.com/mbta/OpenTripPlanner/actions/workflows/deploy.yml). You can
+[deploy workflow](https://github.com/mbta/otp-deploy/actions/workflows/deploy.yml). You can
 select the branch you want to deploy and the environment you want to deploy to.
 
 Additionally, deploys to the associated environment are triggered by the

@@ -1,0 +1,17 @@
+name: Push changes
+# The deploy workflow relies on inputs from a call or dispatch
+# This deploys to certain environments when specific branches are pushed
+
+
+on:
+  push:
+    branches:
+      - 'otp2-upgrade'
+
+jobs:
+  deploy:
+    name: Deploy to local-v2
+    uses: ./.github/workflows/deploy.yml
+    with:
+      deployment-env: local-v2
+    secrets: inherit
