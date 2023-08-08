@@ -2,19 +2,19 @@
   "updaters": [
     {
       "type": "real-time-alerts",
-      "frequencySec": 100,
+      "frequency": "100s",
       "url": "https://cdn.mbta.com/realtime/Alerts.pb",
       "feedId": "mbta-ma-us"
     },
     {
       "type": "stop-time-updater",
-      "frequencySec": 10,
+      "frequency": "10s",
       "url": "https://cdn.mbta.com/realtime/TripUpdates.pb",
       "feedId": "mbta-ma-us"
     },
     {
       "type" : "vehicle-positions",
-      "frequencySec" : 60,
+      "frequency" : "1m",
       "url" : "https://cdn.mbta.com/realtime/VehiclePositions.pb",
       "feedId" : "mbta-ma-us"
     }
