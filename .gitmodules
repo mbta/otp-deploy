@@ -1,4 +1,3 @@
 [submodule "OpenTripPlanner"]
 	path = OpenTripPlanner
-	url = https://github.com/mbta/OpenTripPlanner.git
-	branch = es-fares-v2-updates
+	url = https://github.com/opentripplanner/OpenTripPlanner.git

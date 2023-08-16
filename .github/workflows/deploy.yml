@@ -30,6 +30,8 @@ jobs:
     if: contains(fromJson('["prod", "dev", "dev-green", "dev-blue", "local", "local-v2"]'), inputs.deployment-env)
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - id: set-gtfs-url
         run: |
