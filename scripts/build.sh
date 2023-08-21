@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-git submodule update --init --force
+git clone https://github.com/opentripplanner/OpenTripPlanner.git otp || true
 
-cd OpenTripPlanner
+cd otp
+git checkout b391945480c37eaffc881df427700ef351b4b19d
+
 mvn clean package -U -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
-cp ./target/otp-*-shaded.jar ../otp.jar
 
 cd ..
-java -Xmx8G -jar otp.jar --build --save var/
+java -Xmx8G -jar otp/target/otp-*-shaded.jar --build --save var/

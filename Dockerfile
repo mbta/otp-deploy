@@ -35,7 +35,7 @@ RUN useradd -MU otp
 USER otp
 
 # Copy the OTP JAR and build artifacts into the final image
-COPY --from=builder --chown=otp:otp /build/otp.jar /dist/
+COPY --from=builder --chown=otp:otp /build/otp/target/otp-*-shaded.jar /dist/otp.jar
 COPY --from=builder --chown=otp:otp /build/var/graph.obj /dist/var/
 COPY --from=builder --chown=otp:otp /build/var/*.json /dist/var/
 COPY --from=builder --chown=otp:otp /java/jdk-17.0.7+7-jre /java/jdk-17.0.7+7-jre

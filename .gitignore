@@ -1,4 +1,5 @@
 /.idea
+/otp
 
 var/graph.obj
 var/*.zip
