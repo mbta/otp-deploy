@@ -27,7 +27,7 @@ jobs:
   deploy:
     name: Deploy ${{ github.ref_name }} to otp-${{ inputs.deployment-env }}
     runs-on: ubuntu-latest
-    if: contains(fromJson('["prod", "dev", "dev-green", "dev-blue", "local", "local-v2"]'), inputs.deployment-env)
+    if: contains(fromJson('["prod", "dev", "dev-green", "dev-blue", "local"]'), inputs.deployment-env)
     steps:
       - uses: actions/checkout@v3
         with:
@@ -59,8 +59,8 @@ jobs:
       - uses: mbta/actions/deploy-ecs@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          ecs-cluster: open-trip-planner
-          ecs-service: ${{ format('open-trip-planner-{0}', inputs.deployment-env) }}
+          ecs-cluster: otp2
+          ecs-service: ${{ format('otp2-{0}', inputs.deployment-env) }}
           docker-tag: ${{ steps.build-push.outputs.docker-tag }}
           requires-secrets: 'false'
 
@@ -69,8 +69,8 @@ jobs:
         uses: mbta/actions/deploy-ecs@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          ecs-cluster: open-trip-planner
-          ecs-service: open-trip-planner-local
+          ecs-cluster: otp2
+          ecs-service: otp2-local
           docker-tag: ${{ steps.build-push.outputs.docker-tag }}
           requires-secrets: 'false'
 

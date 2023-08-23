@@ -10,8 +10,8 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to local-v2
+    name: Deploy to local
     uses: ./.github/workflows/deploy.yml
     with:
-      deployment-env: local-v2
+      deployment-env: local
     secrets: inherit
