@@ -22,10 +22,14 @@ ENV PATH="/java/apache-maven-3.9.2/bin/:$PATH"
 # Download the latest GTFS and PBF files, then build OTP
 WORKDIR /build
 COPY . .
+
 ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
 RUN MBTA_GTFS_URL="$MBTA_GTFS_URL" ./scripts/update_gtfs.sh
 RUN ./scripts/update_pbf.sh
-RUN ./scripts/build.sh
+
+ARG OTP_REPO
+ARG OTP_COMMIT
+RUN OTP_REPO="$OTP_REPO" OTP_COMMIT="$OTP_COMMIT" ./scripts/build.sh
 
 # Initialize the OTP runner image
 FROM debian:stable-slim as runner

@@ -3,35 +3,51 @@
 This repo contains all the deploy scripts, CI/CD, and config files for the MBTA's OpenTripPlanner instance.
 
 ## Setup
-You'll need to clone this repo run the following from the project root:
-1. `asdf install`
-1. `mbta/update_gtfs.sh` - fetches latest MBTA and Massport GTFS data
-1. `mbta/update_pbf.sh` - updates OpenStreetMap data
-1. `mbta/build.sh` - packages OTP into a jar, then runs the OTP build process
 
-If you want to test with your own local GTFS changes, put a copy of your GTFS file (if you've built
+You'll need to clone this repo run the following from the project root:
+
+1. `asdf install`
+1. `direnv allow`
+1. `./scripts/update_gtfs.sh` - fetches latest MBTA and Massport GTFS data
+1. `./scripts/update_pbf.sh` - updates OpenStreetMap data
+1. `./scripts/build.sh` - packages OTP into a jar, then runs the OTP build process
+
+If you want to test with local GTFS changes, put a copy of your GTFS file (if you've built
 one with [`gtfs_creator`](https://github.com/mbta/gtfs_creator), it will be written to
 `<gtfs_creator path>/output/google/MBTA_GTFS.zip`) in `var/MBTA_GTFS.gtfs.zip` and re-run the
-`build.sh` script.
+`build.sh` script. Note that it will be overwritten the next time you run `update_gtfs.sh`.
 
 ## Run Locally
-With all of that setup done, you should be able to run `mbta/server.sh`. This will start your local
+
+With all of that setup done, you should be able to run `./scripts/server.sh`. This will start your local
 OTP instance and, when ready, print a message saying that the web server is ready and listening.
 
-Open a browser pointing to [`localhost:8080`](http://localhost:8080), and you'll have a bare-bones web interface to OTP where
-you can try out trip plans.
+Open a browser pointing to [`localhost:8080`](http://localhost:8080), and you'll have a bare-bones web interface to OTP
+where you can try out trip plans.
 
 ## Updating OTP from upstream
 
-This repo uses git submodules to pin OTP to a specific commit and pull the code for use in the build process.
+This repo uses env vars to determine the OTP repo and commit to build with. You can test locally with a different repo
+or commit by updating the values in `.env`. These are only used for local builds (including local Docker),
+in order to update them for AWS deployments, you'll need to update the `set-otp-build-params` step in
+`.github/workflows/deploy.yml`. You can add more cases there for specific environments if you want to deploy a different
+OTP branch for dev testing.
+
+The OTP_COMMIT var can be set either to a commit hash, or to a branch name. A branch isn't used in prod so that we're
+always using a consistent version to build unless we specifically upgrade it. However, it will probably be more
+convenient to use a branch locally and in dev, so feel free to set it to a branch in those cases.
+
 To pull the latest OTP changes, do the following:
 
-1. `git submodule update --init --force --remote`
-1. Commit the updated submodule to a feature branch
-1. Push and test the update in dev
-1. Put up a PR and merge to master once reviewed
+1. Check the [OpenTripPlanner](https://github.com/opentripplanner/OpenTripPlanner/commits/dev-2.x) repo for the latest
+   commit on `dev-2.x` (this is their bleeding-edge release branch)
+1. Copy the commit hash
+1. Update it in `.env` and test the changes locally
+1. Update it in `.github/workflows/deploy.yml`, making sure the value prod is using here matches the value in `.env`
+   before commiting the changes
 
 ## Debugging
+
 If you need to use a debugger, you can run OTP through IntelliJ.
 
 1. Start by adding a new debug configuration,
@@ -54,18 +70,19 @@ If you need to run or debug the build process for some reason, just create anoth
 with the same values except with program arguments `--build --save var/`.
 
 ## Docker
+
 Building and running the docker image locally is usually not necessary, since it's faster to just
 run it using the build scripts or IntelliJ.
 
 From the OTP directory:
-1. `docker build --platform linux/x86_64 .`
-1. `docker images` and copy the image ID of the built image
-1. `docker run --platform linux/x86_64 -p 5000:5000 <image id>`
 
-The OTP web interface will then be running at [`localhost:5000`](http://localhost:5000), and you can update the port in your
-dotcom `.envrc` to use the docker image end to end locally.
+1. `docker-compose up`
+
+The OTP web interface will then be running at [`localhost:5000`](http://localhost:5000), and you can update your
+dotcom `.envrc` to point to this URL to test the docker image end to end locally.
 
 ## Deploy
+
 Deploys to prod happen automatically when any changes are merged into `master`. You can manually
 perform a dev deploy of any feature branch using the
 [deploy workflow](https://github.com/mbta/otp-deploy/actions/workflows/deploy.yml). You can
