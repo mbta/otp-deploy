@@ -1,0 +1,101 @@
+# Invoke deploy to ECS
+name: Deploy to ECS
+
+permissions:
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      deployment-env:
+        description: "Environment to deploy to: prod, dev, dev-green, dev-blue"
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      deployment-env:
+        description: "Environment to deploy to: prod, dev, dev-green, dev-blue"
+        type: environment # will be prod, dev, dev-green or dev-blue
+        required: true
+        default: dev-green
+
+concurrency:
+  group: deploy-${{ inputs.deployment-env }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy ${{ github.ref_name }} to otp-${{ inputs.deployment-env }}
+    runs-on: ubuntu-latest
+    if: contains(fromJson('["prod", "dev", "dev-green", "dev-blue", "local"]'), inputs.deployment-env)
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - id: set-gtfs-url
+        run: |
+          set -eu
+          case "${{ inputs.deployment-env }}" in
+            'dev-blue')
+              URL="${{ vars.MBTA_GTFS_URL_DEV_BLUE }}" ;;
+            'dev-green')
+              URL="${{ vars.MBTA_GTFS_URL_DEV_GREEN }}" ;;
+            'dev')
+              URL="${{ vars.MBTA_GTFS_URL_DEV }}" ;;
+            *)
+              URL="${{ vars.MBTA_GTFS_URL_PROD }}" ;;
+          esac
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
+      - id: set-otp-build-params
+        # Set the repo URL and commit hash or branch to build OTP from, based on .envrc.global vars.
+        # Cases to override specific environments can be added if alternate OTP changes need to be tested long term.
+        run: |
+          set -eu
+          source .envrc.global
+          case "${{ inputs.deployment-env }}" in
+            *)
+              REPO="$OTP_REPO"
+              COMMIT="$OTP_COMMIT"
+              ;;
+          esac
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
+          echo "commit=$COMMIT" >> $GITHUB_OUTPUT
+        
+      - uses: mbta/actions/build-push-ecr@v2
+        id: build-push
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          docker-repo: ${{ secrets.DOCKER_REPO }}
+          docker-additional-args: >-
+            --build-arg MBTA_GTFS_URL="${{ steps.set-gtfs-url.outputs.url }}"
+            --build-arg OTP_REPO="${{ steps.set-otp-build-params.outputs.repo }}"
+            --build-arg OTP_COMMIT="${{ steps.set-otp-build-params.outputs.commit }}"
+          docker-additional-tags: ${{ inputs.deployment-env }}
+
+      - uses: mbta/actions/deploy-ecs@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          ecs-cluster: otp2
+          ecs-service: ${{ format('otp2-{0}', inputs.deployment-env) }}
+          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
+          requires-secrets: 'false'
+
+      - name: Sync OTP-local with OTP-prod
+        if: inputs.deployment-env == 'prod'
+        uses: mbta/actions/deploy-ecs@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          ecs-cluster: otp2
+          ecs-service: otp2-local
+          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
+          requires-secrets: 'false'
+
+      - uses: mbta/actions/notify-slack-deploy@v1
+        if: ${{ !cancelled() }}
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          job-status: ${{ job.status }}
+          custom-message: |
+            `${{ github.ref_name }}` deployed to open-trip-planner-${{ inputs.deployment-env }}

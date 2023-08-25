@@ -1,6 +1,9 @@
-/mbta_otp.zip
-/*.osm.pbf
-/var/graphs/mbta/Graph.obj
-/var/graphs/mbta/MBTA_GTFS.zip
-/var/graphs/mbta/*.pbf
 /.idea
+/otp
+
+var/graph.obj
+var/*.zip
+var/*.pbf
+*.jar
+
+.envrc.local

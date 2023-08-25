@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  otp_server:
+    container_name: otp_server
+    build:
+      context: .
+      args:
+        - OTP_REPO=$OTP_REPO
+        - OTP_COMMIT=$OTP_COMMIT
+    platform: linux/x86_64
+    ports:
+      - "5000:5000"

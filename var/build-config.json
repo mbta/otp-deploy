@@ -1,0 +1,7 @@
+{
+  "boardingLocationTags": ["gtfs:stop_id", "ref"],
+  "embedRouterConfig": false,
+  "osmDefaults": {
+    "timeZone": "America/New_York"
+  }
+}
