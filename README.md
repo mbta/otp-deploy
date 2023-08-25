@@ -27,11 +27,12 @@ where you can try out trip plans.
 
 ## Updating OTP from upstream
 
-This repo uses env vars to determine the OTP repo and commit to build with. You can test locally with a different repo
-or commit by updating the values in `.env`. These are only used for local builds (including local Docker),
-in order to update them for AWS deployments, you'll need to update the `set-otp-build-params` step in
-`.github/workflows/deploy.yml`. You can add more cases there for specific environments if you want to deploy a different
-OTP branch for dev testing.
+This repo uses env vars defined in `.envrc.global` to determine the OTP repo and commit to build with. You can test
+locally with a different repo or commit by copying `.envrc.local` from `.envrc.local.template`, setting the values in
+there will override the global ones.
+The values from `.envrc.global` are read by the `set-otp-build-params` step in `.github/workflows/deploy.yml` and used
+in the builds in AWS. You can add more cases there to override these for specific environments if you want to deploy a
+different OTP branch for dev testing, though this should only need to be used temporarily for longer term testing.
 
 The OTP_COMMIT var can be set either to a commit hash, or to a branch name. A branch isn't used in prod so that we're
 always using a consistent version to build unless we specifically upgrade it. However, it will probably be more
@@ -42,9 +43,9 @@ To pull the latest OTP changes, do the following:
 1. Check the [OpenTripPlanner](https://github.com/opentripplanner/OpenTripPlanner/commits/dev-2.x) repo for the latest
    commit on `dev-2.x` (this is their bleeding-edge release branch)
 1. Copy the commit hash
-1. Update it in `.env` and test the changes locally
-1. Update it in `.github/workflows/deploy.yml`, making sure the value prod is using here matches the value in `.env`
-   before commiting the changes
+1. Update it in `.envrc.global` and test the changes locally (making sure you're not overwriting them with
+   `.envrc.local`)
+1. Put up a PR and merge/deploy once approved
 
 ## Debugging
 

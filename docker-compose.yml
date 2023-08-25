@@ -4,7 +4,6 @@ services:
 
   otp_server:
     container_name: otp_server
-    env_file: .env
     build:
       context: .
       args:

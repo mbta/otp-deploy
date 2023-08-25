@@ -1,0 +1,5 @@
+# If you want to make local changes to these values for testing purposes,
+# copy this template into .envrc.local, and update accordingly.
+
+export OTP_REPO=https://github.com/opentripplanner/OpenTripPlanner.git
+export OTP_COMMIT=

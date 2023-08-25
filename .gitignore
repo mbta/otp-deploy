@@ -5,3 +5,5 @@ var/graph.obj
 var/*.zip
 var/*.pbf
 *.jar
+
+.envrc.local

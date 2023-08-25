@@ -1,0 +1,9 @@
+# These values define the OTP build version used by both the github actions for AWS deploys
+# and by .envrc to apply to local environments. If you want to override them locally,
+# you can create an .envrc.local file based on .envrc.local.template.
+# The global values should only be changed when the OTP version is upgraded.
+#
+# An https URL must be used for the repo, or docker won't be able to clone it.
+export OTP_REPO=https://github.com/opentripplanner/OpenTripPlanner.git
+# The commit can be either a hash or a branch, but only hashes should be used in prod.
+export OTP_COMMIT=79d1cbca0c31c52258fabce48bf225e790c706a9
