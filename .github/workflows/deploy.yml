@@ -49,20 +49,7 @@ jobs:
           echo "url=$URL" >> $GITHUB_OUTPUT
 
       - id: set-otp-build-params
-        # Set the repo URL and commit hash or branch to build OTP from.
-        # An https URL must be used for the repo, or docker won't be able to clone it.
-        # You can add cases for specific environments if you need to test alternate OTP changes.
-        # If you change this for prod, remember to also update .env to match.
-        run: |
-          set -eu
-          case "${{ inputs.deployment-env }}" in
-            *)
-              REPO="https://github.com/opentripplanner/OpenTripPlanner.git"
-              COMMIT="79d1cbca0c31c52258fabce48bf225e790c706a9"
-              ;;
-          esac
-          echo "repo=$REPO" >> $GITHUB_OUTPUT
-          echo "commit=$COMMIT" >> $GITHUB_OUTPUT
+        uses: falti/dotenv-action@v1.0.4
 
       - uses: mbta/actions/build-push-ecr@v2
         id: build-push
@@ -71,8 +58,8 @@ jobs:
           docker-repo: ${{ secrets.DOCKER_REPO }}
           docker-additional-args: >-
             --build-arg MBTA_GTFS_URL="${{ steps.set-gtfs-url.outputs.url }}"
-            --build-arg OTP_REPO="${{ steps.set-otp-build-params.outputs.repo }}"
-            --build-arg OTP_COMMIT="${{ steps.set-otp-build-params.outputs.commit }}"
+            --build-arg OTP_REPO="${{ steps.set-otp-build-params.outputs.otp_repo }}"
+            --build-arg OTP_COMMIT="${{ steps.set-otp-build-params.outputs.otp_commit }}"
           docker-additional-tags: ${{ inputs.deployment-env }}
 
       - uses: mbta/actions/deploy-ecs@v2
