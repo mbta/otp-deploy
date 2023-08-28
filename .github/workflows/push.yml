@@ -6,12 +6,12 @@ name: Push changes
 on:
   push:
     branches:
-      - 'otp2-upgrade'
+      - 'master'
 
 jobs:
   deploy:
-    name: Deploy to local
+    name: Deploy to prod
     uses: ./.github/workflows/deploy.yml
     with:
-      deployment-env: local
+      deployment-env: prod
     secrets: inherit
