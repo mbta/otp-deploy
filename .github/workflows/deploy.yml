@@ -64,7 +64,7 @@ jobs:
           echo "repo=$REPO" >> $GITHUB_OUTPUT
           echo "commit=$COMMIT" >> $GITHUB_OUTPUT
         
-      - uses: mbta/actions/build-push-ecr@v2
+      - uses: mbta/actions/build-push-ecr@mth-docker-build-push
         id: build-push
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
