@@ -49,7 +49,14 @@ To pull the latest OTP changes, do the following:
 
 ## Debugging
 
-If you need to use a debugger, you can run OTP through IntelliJ.
+If you need to use a debugger, you can run OTP through IntelliJ. These steps must be run from a
+cloned `OpenTripPlanner` repo, _not_ the `otp-deploy` deploy repo, though you can point the build
+and run steps to use the config files in `otp-deploy`. The config here assumes that the two repos
+exist alongside each other in the same directory.
+
+Remember to double check the commit that the
+`OpenTripPlanner` repo is on, depending on what you're testing, you might need it to match or be
+different from the version set in `.envrc.global`.
 
 1. Start by adding a new debug configuration,
 go to `Edit Configurations` and create a new [Application template, following the IntelliJ
@@ -58,17 +65,20 @@ values provided below.
    * Java version: Java 17 (browse to your asdf install, usually `~/.asdf/installs/java/<version>`,
    for exact parity with the version used by the build scripts, though any Java 17 JDK is fine)
    * Main class: `org.opentripplanner.standalone.OTPMain`
-   * Program arguments: `--load var/`
+   * Program arguments: `--load ../otp-deploy/var/`
    * Working directory: `<path to your OTP repo>`
 1. You'll also need to [follow the IntelliJ docs to set your SDK in the project
 setup](https://www.jetbrains.com/help/idea/sdk.html#change-project-sdk). Again, the most consistent
 option is your asdf JDK, but any Java 17 JDK should work.
+1. Make sure you run `mvn clean install` to fetch all the dependencies, you can do this with the
+"Excute Maven Goal" button in the IntelliJ Maven submenu, or you can just run the command in the
+terminal.
 1. Once the config is created, you can run it normally or as a debugger. If you run into any issues
 with the application running out of memory, you can go to `Modify options > Add VM options` in the
 edit configuration UI then add the flag `-Xmx8G` to increase the JVM memory pool maximum.
 
 If you need to run or debug the build process for some reason, just create another configuration
-with the same values except with program arguments `--build --save var/`.
+with the same values except with program arguments `--build --save ../otp-deploy/var/`.
 
 ## Docker
 
