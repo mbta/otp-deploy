@@ -1,4 +1,9 @@
 {
+  "routingDefaults": {
+    "itineraryFilters": {
+      "accessibilityScore": true
+    }
+  },
   "updaters": [
     {
       "type": "real-time-alerts",
