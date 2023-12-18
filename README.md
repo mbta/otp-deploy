@@ -2,6 +2,10 @@
 
 This repo contains all the deploy scripts, CI/CD, and config files for the MBTA's OpenTripPlanner instance.
 
+* [OTP Repo](https://github.com/opentripplanner/OpenTripPlanner)
+* [OTP Docs](https://docs.opentripplanner.org/en/dev-2.x/)
+* [OTP Chatroom](https://gitter.im/opentripplanner/OpenTripPlanner)
+
 ## Setup
 
 You'll need to clone this repo run the following from the project root:
@@ -19,11 +23,20 @@ one with [`gtfs_creator`](https://github.com/mbta/gtfs_creator), it will be writ
 
 ## Run Locally
 
+All the build files, including configs, GTFS, OSM data, and the graph file that the build step creates, are placed in
+the `./var` directory.
+
 With all of that setup done, you should be able to run `./scripts/server.sh`. This will start your local
 OTP instance and, when ready, print a message saying that the web server is ready and listening.
 
 Open a browser pointing to [`localhost:8080`](http://localhost:8080), and you'll have a bare-bones web interface to OTP
 where you can try out trip plans.
+
+If you're not seeing any results from the current day, double check that you don't have an old GTFS file, if the
+schedules don't include the requested date, OTP can't plan a trip for it. If OTP doesn't seem to include recent OSM
+changes that you expect it have, double check that the `.pbf` file is up to date, and that the changeset is included
+in the latest [Geofabrik update](http://download.geofabrik.de/north-america/us/massachusetts.html). These updates only
+happen once per day, so you may need to wait up to 24 hours to pull any OSM changes you've made.
 
 ## Updating OTP from upstream
 
