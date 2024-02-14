@@ -1,7 +1,8 @@
 {
   "routingDefaults": {
     "itineraryFilters": {
-      "accessibilityScore": true
+      "accessibilityScore": true,
+      "removeItinerariesWithSameRoutesAndStops": true
     }
   },
   "updaters": [
@@ -18,10 +19,10 @@
       "feedId": "mbta-ma-us"
     },
     {
-      "type" : "vehicle-positions",
-      "frequency" : "1m",
-      "url" : "https://cdn.mbta.com/realtime/VehiclePositions.pb",
-      "feedId" : "mbta-ma-us"
+      "type": "vehicle-positions",
+      "frequency": "1m",
+      "url": "https://cdn.mbta.com/realtime/VehiclePositions.pb",
+      "feedId": "mbta-ma-us"
     }
   ]
 }
