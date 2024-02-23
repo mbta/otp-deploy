@@ -6,13 +6,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl git ca-cer
 WORKDIR /java/
 
 # Download the JRE for copying to the image to run the OTP server
-RUN curl -Lo jre17.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.7%2B7/OpenJDK17U-jre_x64_linux_hotspot_17.0.7_7.tar.gz
-RUN tar xvf jre17.tar.gz && rm jre17.tar.gz
+RUN curl -Lo jre21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_x64_linux_hotspot_21.0.2_13.tar.gz
+RUN tar xvf jre21.tar.gz && rm jre21.tar.gz
 
 # Download the JDK and maven and add them to path for building OTP
-RUN curl -Lo jdk17.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.7%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.7_7.tar.gz
-RUN tar xvf jdk17.tar.gz && rm jdk17.tar.gz
-ENV JAVA_HOME=/java/jdk-17.0.7+7/
+RUN curl -Lo jdk21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz
+RUN tar xvf jdk21.tar.gz && rm jdk21.tar.gz
+ENV JAVA_HOME=/java/jdk-21.0.2+13/
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 RUN curl -Lo maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
@@ -42,10 +42,10 @@ USER otp
 COPY --from=builder --chown=otp:otp /build/otp/target/otp-*-shaded.jar /dist/otp.jar
 COPY --from=builder --chown=otp:otp /build/var/graph.obj /dist/var/
 COPY --from=builder --chown=otp:otp /build/var/*.json /dist/var/
-COPY --from=builder --chown=otp:otp /java/jdk-17.0.7+7-jre /java/jdk-17.0.7+7-jre
+COPY --from=builder --chown=otp:otp /java/jdk-21.0.2+13-jre /java/jdk-21.0.2+13-jre
 
 # Set the default java install to the JRE that was copied into the image rather than the JDK
-ENV JAVA_HOME="/java/jdk-17.0.7+7-jre"
+ENV JAVA_HOME="/java/jdk-21.0.2+13-jre"
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 ENV PORT=5000

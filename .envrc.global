@@ -6,4 +6,5 @@
 # An https URL must be used for the repo, or docker won't be able to clone it.
 export OTP_REPO=https://github.com/opentripplanner/OpenTripPlanner.git
 # The commit can be either a hash or a branch, but only hashes should be used in prod.
-export OTP_COMMIT=0535840c494b17a520ac0b7f595822acb1cccad3
+# This is somewhere after 2.4.0 but before 2.5.0, in order to use the numberOfTransfers field on Itinerary
+export OTP_COMMIT=5da22683573f94b5d32f4711e29ff2252c28fcac
