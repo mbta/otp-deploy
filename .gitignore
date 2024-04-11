@@ -4,6 +4,8 @@
 var/graph.obj
 var/*.zip
 var/*.pbf
+var/report
 *.jar
 
 .envrc.local
+.DS_Store

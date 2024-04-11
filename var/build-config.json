@@ -1,5 +1,9 @@
 {
-  "boardingLocationTags": ["gtfs:stop_id", "ref"],
+  "boardingLocationTags": [
+    "gtfs:stop_id",
+    "ref"
+  ],
+  "dataImportReport": true,
   "embedRouterConfig": false,
   "osmDefaults": {
     "timeZone": "America/New_York"
