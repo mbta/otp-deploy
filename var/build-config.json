@@ -8,6 +8,18 @@
   "osmDefaults": {
     "timeZone": "America/New_York"
   },
+  "transitFeeds": [
+    {
+      "type": "gtfs",
+      "feedId": "massport-ma-us",
+      "source": "https://data.trilliumtransit.com/gtfs/massport-ma-us/massport-ma-us.zip"
+    },
+    {
+      "type": "gtfs",
+      "feedId": "mbta-ma-us",
+      "source": "mbta-ma-us.gtfs.zip"
+    }
+  ],
   "transferRequests": [
     {
       "modes": "WALK"
