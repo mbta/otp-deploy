@@ -5,6 +5,19 @@
   ],
   "dataImportReport": true,
   "embedRouterConfig": false,
+  "osm": [
+    {
+      "source": "https://download.geofabrik.de/north-america/us/massachusetts-latest.osm.pbf",
+      "timeZone": "America/New_York",
+      "osmTagMapping": "default"
+    },
+    {
+      "source": "https://download.geofabrik.de/north-america/us/rhode-island-latest.osm.pbf",
+      "timeZone": "America/New_York",
+      "osmTagMapping": "default"
+    }
+  ],
+  "osmCacheDataInMem": "true",
   "osmDefaults": {
     "timeZone": "America/New_York"
   },

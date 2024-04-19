@@ -13,7 +13,6 @@ You'll need to clone this repo run the following from the project root:
 1. `asdf install`
 1. `direnv allow`
 1. `./scripts/update_gtfs.sh` - fetches latest MBTA and Massport GTFS data
-1. `./scripts/update_pbf.sh` - updates OpenStreetMap data
 1. `./scripts/build.sh` - packages OTP into a jar, then runs the OTP build process
 
 If you want to test with local GTFS changes, put a copy of your GTFS file (if you've built
