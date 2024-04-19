@@ -24,8 +24,7 @@ WORKDIR /build
 COPY . .
 
 ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
-RUN MBTA_GTFS_URL="$MBTA_GTFS_URL" ./scripts/update_gtfs.sh
-RUN ./scripts/update_pbf.sh
+ENV MBTA_GTFS_URL="$MBTA_GTFS_URL"
 
 ARG OTP_REPO
 ARG OTP_COMMIT

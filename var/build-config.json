@@ -30,7 +30,7 @@
     {
       "type": "gtfs",
       "feedId": "mbta-ma-us",
-      "source": "mbta-ma-us.gtfs.zip"
+      "source": "${MBTA_GTFS_URL}"
     }
   ],
   "transferRequests": [
