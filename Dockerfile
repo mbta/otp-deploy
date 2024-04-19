@@ -19,7 +19,6 @@ RUN curl -Lo maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.2/bi
 RUN tar xvf maven.tar.gz && rm maven.tar.gz
 ENV PATH="/java/apache-maven-3.9.2/bin/:$PATH"
 
-# Download the latest GTFS and PBF files, then build OTP
 WORKDIR /build
 COPY . .
 
@@ -46,7 +45,7 @@ COPY --from=builder --chown=otp:otp /java/jdk-21.0.2+13-jre /java/jdk-21.0.2+13-
 # Set the default java install to the JRE that was copied into the image rather than the JDK
 ENV JAVA_HOME="/java/jdk-21.0.2+13-jre"
 ENV PATH="$JAVA_HOME/bin:$PATH"
-
+ENV MBTA_GTFS_URL="$MBTA_GTFS_URL"
 ENV PORT=5000
 EXPOSE $PORT
 
