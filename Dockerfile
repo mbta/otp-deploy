@@ -45,6 +45,8 @@ COPY --from=builder --chown=otp:otp /java/jdk-21.0.2+13-jre /java/jdk-21.0.2+13-
 # Set the default java install to the JRE that was copied into the image rather than the JDK
 ENV JAVA_HOME="/java/jdk-21.0.2+13-jre"
 ENV PATH="$JAVA_HOME/bin:$PATH"
+
+ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
 ENV MBTA_GTFS_URL="$MBTA_GTFS_URL"
 ENV PORT=5000
 EXPOSE $PORT
