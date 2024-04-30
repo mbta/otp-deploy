@@ -19,13 +19,11 @@ RUN curl -Lo maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.2/bi
 RUN tar xvf maven.tar.gz && rm maven.tar.gz
 ENV PATH="/java/apache-maven-3.9.2/bin/:$PATH"
 
-# Download the latest GTFS and PBF files, then build OTP
 WORKDIR /build
 COPY . .
 
 ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
-RUN MBTA_GTFS_URL="$MBTA_GTFS_URL" ./scripts/update_gtfs.sh
-RUN ./scripts/update_pbf.sh
+ENV MBTA_GTFS_URL="$MBTA_GTFS_URL"
 
 ARG OTP_REPO
 ARG OTP_COMMIT
@@ -48,6 +46,8 @@ COPY --from=builder --chown=otp:otp /java/jdk-21.0.2+13-jre /java/jdk-21.0.2+13-
 ENV JAVA_HOME="/java/jdk-21.0.2+13-jre"
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
+ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
+ENV MBTA_GTFS_URL="$MBTA_GTFS_URL"
 ENV PORT=5000
 EXPOSE $PORT
 
