@@ -1,5 +1,6 @@
 # Invoke deploy to ECS
 name: Deploy to ECS
+run-name: Deploy to ${{ inputs.deployment-env }}
 
 permissions:
   id-token: write
