@@ -3,6 +3,9 @@
     "itineraryFilters": {
       "accessibilityScore": true,
       "removeItinerariesWithSameRoutesAndStops": true
+    },
+    "wheelchairAccessibility": {
+      "enabled": true
     }
   },
   "updaters": [
