@@ -2,7 +2,7 @@
   "routingDefaults": {
     "itineraryFilters": {
       "accessibilityScore": true,
-      "removeItinerariesWithSameRoutesAndStops": ${REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS}
+      "removeItinerariesWithSameRoutesAndStops": "${REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS}"
     },
     "searchWindow": "${SEARCH_WINDOW}"
   },

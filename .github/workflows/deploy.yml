@@ -50,12 +50,6 @@ jobs:
           esac
           echo "url=$URL" >> $GITHUB_OUTPUT
 
-      - id: set-default-config
-        name: Set default config
-        run: |
-          echo "MAX_SEARCH_WINDOW=PT24H" >> "$GITHUB_ENV"
-          echo "REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS=true" >> "$GITHUB_ENV"
-          echo "SEARCH_WINDOW=PT24H" >> "$GITHUB_ENV"
       - id: set-otp-build-params
         # Set the repo URL and commit hash or branch to build OTP from, based on .envrc.global vars.
         # Cases to override specific environments can be added if alternate OTP changes need to be tested long term.
