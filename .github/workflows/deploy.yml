@@ -56,7 +56,7 @@ jobs:
           echo "MAX_SEARCH_WINDOW=PT24H" >> $GITHUB_OUTPUT
           echo "REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS=true" >> $GITHUB_OUTPUT
           echo "SEARCH_WINDOW=PT24H" >> $GITHUB_OUTPUT
-          echo "UPDATE_URL=https://cdn.mbta.com/realtime/"
+          echo "UPDATE_URL=https://cdn.mbta.com/realtime/" >> $GITHUB_OUTPUT
 
       - id: set-otp-build-params
         # Set the repo URL and commit hash or branch to build OTP from, based on .envrc.global vars.
