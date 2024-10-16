@@ -56,6 +56,9 @@ jobs:
           echo "MAX_SEARCH_WINDOW=PT24H" >> $GITHUB_OUTPUT
           echo "REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS=true" >> $GITHUB_OUTPUT
           echo "SEARCH_WINDOW=PT24H" >> $GITHUB_OUTPUT
+          echo "URL_ALERTS=https://cdn.mbta.com/realtime/Alerts.pb" >> $GITHUB_OUTPUT
+          echo "URL_TRIP_UPDATES=https://cdn.mbta.com/realtime/TripUpdates.pb" >> $GITHUB_OUTPUT
+          echo "URL_VEHICLE_POSITIONS=https://cdn.mbta.com/realtime/VehiclePositions.pb" >> $GITHUB_OUTPUT
 
       - id: set-otp-build-params
         # Set the repo URL and commit hash or branch to build OTP from, based on .envrc.global vars.
@@ -78,12 +81,15 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           docker-repo: ${{ secrets.DOCKER_REPO }}
           docker-additional-args: >-
-            --build-arg MAX_SEARCH_WINDOW="${{ steps.set-default-config.outputs.MAX_SEARCH_WINDOW }}"
-            --build-arg REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS="${{ steps.set-default-config.outputs.REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS }}"
-            --build-arg SEARCH_WINDOW="${{ steps.set-default-config.outputs.SEARCH_WINDOW }}"
             --build-arg MBTA_GTFS_URL="${{ steps.set-gtfs-url.outputs.url }}"
             --build-arg OTP_REPO="${{ steps.set-otp-build-params.outputs.repo }}"
             --build-arg OTP_COMMIT="${{ steps.set-otp-build-params.outputs.commit }}"
+            --build-arg MAX_SEARCH_WINDOW="${{ steps.set-default-config.outputs.MAX_SEARCH_WINDOW }}"
+            --build-arg REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS="${{ steps.set-default-config.outputs.REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS }}"
+            --build-arg SEARCH_WINDOW="${{ steps.set-default-config.outputs.SEARCH_WINDOW }}"
+            --build-arg URL_ALERTS="${{ steps.set-default-config.outputs.URL_ALERTS }}"
+            --build-arg URL_TRIP_UPDATES="${{ steps.set-default-config.outputs.URL_TRIP_UPDATES }}"
+            --build-arg URL_VEHICLE_POSITIONS="${{ steps.set-default-config.outputs.URL_VEHICLE_POSITIONS }}"
           docker-additional-tags: ${{ inputs.deployment-env }}
 
       - uses: mbta/actions/deploy-ecs@v2
