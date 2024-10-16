@@ -13,19 +13,19 @@
     {
       "type": "real-time-alerts",
       "frequency": "100s",
-      "url": "${UPDATE_URL}Alerts.pb",
+      "url": "${URL_ALERTS}",
       "feedId": "mbta-ma-us"
     },
     {
       "type": "stop-time-updater",
       "frequency": "10s",
-      "url": "${UPDATE_URL}TripUpdates.pb",
+      "url": "${URL_TRIP_UPDATES}",
       "feedId": "mbta-ma-us"
     },
     {
       "type": "vehicle-positions",
       "frequency": "1m",
-      "url": "${UPDATE_URL}VehiclePositions.pb",
+      "url": "${URL_VEHICLE_POSITIONS}",
       "feedId": "mbta-ma-us"
     }
   ]
