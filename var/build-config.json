@@ -31,6 +31,11 @@
       "type": "gtfs",
       "feedId": "mbta-ma-us",
       "source": "${MBTA_GTFS_URL}"
+    },
+    {
+      "type": "gtfs",
+      "feedId": "mbta-ma-us-no-disruptions",
+      "source": "../disruption-free-for-dotcom.zip"
     }
   ],
   "transferRequests": [
