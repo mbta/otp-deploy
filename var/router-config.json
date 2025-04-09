@@ -4,7 +4,26 @@
       "accessibilityScore": true,
       "removeItinerariesWithSameRoutesAndStops": "${REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS}"
     },
-    "searchWindow": "${SEARCH_WINDOW}"
+    "searchWindow": "${SEARCH_WINDOW}",
+    "wheelchairAccessibility": {
+      "trip": {
+        "onlyConsiderAccessible": false,
+        "unknownCost": 600,
+        "inaccessibleCost": 3600
+      },
+      "stop": {
+        "onlyConsiderAccessible": false,
+        "unknownCost": 600,
+        "inaccessibleCost": 3600
+      },
+      "elevator": {
+        "onlyConsiderAccessible": false
+      },
+      "inaccessibleStreetReluctance": 25,
+      "maxSlope": 0.08333,
+      "slopeExceededReluctance": 50,
+      "stairsReluctance": 25
+    }
   },
   "transit": {
     "maxSearchWindow": "${MAX_SEARCH_WINDOW}"
