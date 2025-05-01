@@ -5,6 +5,20 @@
       "removeItinerariesWithSameRoutesAndStops": "${REMOVE_ITINERARIES_WITH_SAME_ROUTES_AND_STOPS}"
     },
     "searchWindow": "${SEARCH_WINDOW}",
+    "transferSlack": 90,
+    "waitReluctance": 3.25,
+    "transitReluctanceForMode": {
+      "BUS": 1.5,
+      "SUBWAY": 0.65,
+      "RAIL": 0.95
+    },
+    "walk": {
+      "speed": 1.3,
+      "reluctance": 4.0,
+      "stairsReluctance": 1.5,
+      "stairsTimeFactor": 2,
+      "boardCost": 120
+    },
     "wheelchairAccessibility": {
       "trip": {
         "onlyConsiderAccessible": false,
