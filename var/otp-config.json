@@ -1,5 +1,7 @@
 {
     "otpFeatures" : {
-        "ActuatorAPI" : true
+        "APIBikeRental": false,
+        "ActuatorAPI" : true,
+        "FloatingBike": false
     }
 }
