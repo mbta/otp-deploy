@@ -19,4 +19,5 @@ git checkout $OTP_COMMIT
 mvn clean package -U -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
 
 cd ..
-java -Xmx8G -jar otp/otp-shaded/target/otp-shaded-*.jar --build --save var/
+# TODO write better script (the wildcards were matching otp-shaded-2.8.0-SNAPSHOT-sources.jar instead of the right one)
+java -Xmx8G -jar otp/otp-shaded/target/otp-shaded-2.8.0-SNAPSHOT.jar --build --save var/
