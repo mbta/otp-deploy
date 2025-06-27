@@ -19,4 +19,4 @@ git checkout $OTP_COMMIT
 mvn clean package -U -Dmaven.test.skip=true -Dgpg.skip -Dmaven.javadoc.skip=true
 
 cd ..
-java -Xmx8G -jar otp/target/otp-*-shaded.jar --build --save var/
+java -Xmx8G -jar otp/otp-shaded/target/otp-shaded-*.jar --build --save var/
