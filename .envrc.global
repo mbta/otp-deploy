@@ -7,8 +7,8 @@
 export OTP_REPO=https://github.com/opentripplanner/OpenTripPlanner.git
 # The commit can be either a hash or a branch, but only hashes should be used in prod.
 
-# This is somewhat after 2.5.0
-export OTP_COMMIT=69dca4ee82fc7b8fd96c610b176e40d750007841
+# 2.7 LATEST COMMIT JUN 27
+export OTP_COMMIT=0e111e4e3656a58350ec4ce2bdfce72743ce9481
 
 export MBTA_GTFS_URL="${MBTA_GTFS_URL:-https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip}"
 
