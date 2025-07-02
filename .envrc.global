@@ -4,11 +4,11 @@
 # The global values should only be changed when the OTP version is upgraded.
 #
 # An https URL must be used for the repo, or docker won't be able to clone it.
-export OTP_REPO=https://github.com/opentripplanner/OpenTripPlanner.git
+export OTP_REPO=https://github.com/joshlarson/OpenTripPlanner.git
 # The commit can be either a hash or a branch, but only hashes should be used in prod.
 
 # This is somewhat after 2.5.0
-export OTP_COMMIT=69dca4ee82fc7b8fd96c610b176e40d750007841
+export OTP_COMMIT=cafd65739fdcf6f9621e4ed822bcf9db6649a87d
 
 export MBTA_GTFS_URL="${MBTA_GTFS_URL:-https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip}"
 

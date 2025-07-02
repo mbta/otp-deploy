@@ -7,7 +7,7 @@
   "embedRouterConfig": false,
   "osm": [
     {
-      "source": "https://download.geofabrik.de/north-america/us/massachusetts-latest.osm.pbf",
+      "source": "../var/massachusetts.osm.pbf",
       "timeZone": "America/New_York",
       "osmTagMapping": "default"
     },

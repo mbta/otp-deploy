@@ -1,0 +1,75 @@
+<osmChange version="0.6" generator="iD">
+  <create>
+    <node id="-5" lon="-71.06392748508483" lat="42.34967986110889" version="0">
+      <tag k="railway" v="subway_entrance"/>
+      <tag k="level" v="-1"/>
+      <tag k="wheelchair" v="yes"/>
+      <tag k="entrance" v="main"/>
+    </node>
+    <node id="-6" lon="-71.06387403965547" lat="42.349677345432674" version="0"/>
+    <node id="-9" lon="-71.06391659206628" lat="42.34966325256093" version="0"/>
+    <way id="-2" version="0">
+      <nd ref="-6"/>
+      <nd ref="-5"/>
+      <tag k="highway" v="footway"/>
+      <tag k="foot" v="yes"/>
+      <tag k="bicycle" v="yes"/>
+      <tag k="motor_vehicle" v="no"/>
+      <tag k="access" v="yes"/>
+      <tag k="surface" v="concrete"/>
+      <tag k="lit" v="yes"/>
+      <tag k="covered" v="yes"/>
+    </way>
+    <way id="-3" version="0">
+      <nd ref="-5"/>
+      <nd ref="-9"/>
+      <tag k="highway" v="footway"/>
+      <tag k="access" v="yes"/>
+      <tag k="foot" v="yes"/>
+      <tag k="motor_vehicle" v="no"/>
+      <tag k="bicycle" v="yes"/>
+    </way>
+  </create>
+  <modify>
+    <way id="819279877" version="6">
+      <nd ref="6543317483"/>
+      <nd ref="7996494183"/>
+      <nd ref="7650883846"/>
+      <nd ref="7650883847"/>
+      <nd ref="7650883848"/>
+      <nd ref="7650883850"/>
+      <nd ref="7650883849"/>
+      <nd ref="7732861296"/>
+      <nd ref="10922942878"/>
+      <nd ref="-6"/>
+      <nd ref="7732861299"/>
+      <tag k="footway" v="sidewalk"/>
+      <tag k="highway" v="footway"/>
+    </way>
+    <way id="236579327" version="4">
+      <nd ref="2446018130"/>
+      <nd ref="11196820860"/>
+      <nd ref="11196820859"/>
+      <nd ref="11196820858"/>
+      <nd ref="11196820857"/>
+      <nd ref="11196820856"/>
+      <nd ref="2446018132"/>
+      <nd ref="-9"/>
+      <nd ref="2446018130"/>
+      <tag k="layer" v="-3"/>
+      <tag k="location" v="underground"/>
+      <tag k="name" v="Tufts Medical Center"/>
+      <tag k="network" v="MBTA"/>
+      <tag k="network:guid" v="US-MA-MBTA"/>
+      <tag k="network:short" v="MBTA"/>
+      <tag k="network:wikidata" v="Q171985"/>
+      <tag k="network:wikipedia" v="en:Massachusetts Bay Transportation Authority"/>
+      <tag k="operator" v="MBTA"/>
+      <tag k="operator:wikidata" v="Q171985"/>
+      <tag k="public_transport" v="platform"/>
+      <tag k="railway" v="platform"/>
+      <tag k="subway" v="yes"/>
+    </way>
+  </modify>
+  <delete if-unused="true"/>
+</osmChange>
