@@ -34,7 +34,7 @@
     },
     {
       "type": "gtfs",
-      "feedId": "mbta-ma-us-no-disruptions",
+      "feedId": "mbta-ma-us-initial",
       "source": "../disruption-free-for-dotcom.zip"
     }
   ],
