@@ -46,6 +46,24 @@
       "frequency": "1m",
       "url": "${URL_VEHICLE_POSITIONS}",
       "feedId": "mbta-ma-us"
+    },
+    {
+      "type": "real-time-alerts",
+      "frequency": "100s",
+      "url": "${URL_ALERTS}",
+      "feedId": "mbta-ma-us-initial"
+    },
+    {
+      "type": "stop-time-updater",
+      "frequency": "10s",
+      "url": "${URL_TRIP_UPDATES}",
+      "feedId": "mbta-ma-us-initial"
+    },
+    {
+      "type": "vehicle-positions",
+      "frequency": "1m",
+      "url": "${URL_VEHICLE_POSITIONS}",
+      "feedId": "mbta-ma-us-initial"
     }
   ]
 }
