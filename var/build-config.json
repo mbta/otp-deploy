@@ -7,12 +7,12 @@
   "embedRouterConfig": false,
   "osm": [
     {
-      "source": "https://download.geofabrik.de/north-america/us/massachusetts-latest.osm.pbf",
+      "source": "https://mbta-map-tiles.s3.us-east-1.amazonaws.com/data/osm/massachusetts-latest.osm.pbf",
       "timeZone": "America/New_York",
       "osmTagMapping": "default"
     },
     {
-      "source": "https://download.geofabrik.de/north-america/us/rhode-island-latest.osm.pbf",
+      "source": "https://mbta-map-tiles.s3.us-east-1.amazonaws.com/data/osm/rhode-island-latest.osm.pbf",
       "timeZone": "America/New_York",
       "osmTagMapping": "default"
     }
