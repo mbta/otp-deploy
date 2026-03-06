@@ -32,9 +32,8 @@ where you can try out trip plans.
 
 If you're not seeing any results from the current day, double check that you don't have an old GTFS file, if the
 schedules don't include the requested date, OTP can't plan a trip for it. If OTP doesn't seem to include recent OSM
-changes that you expect it have, double check that the `.pbf` file is up to date, and that the changeset is included
-in the latest [Geofabrik update](http://download.geofabrik.de/north-america/us/massachusetts.html). These updates only
-happen once per day, so you may need to wait up to 24 hours to pull any OSM changes you've made.
+changes that you expect it have, double check that the `.pbf` file is up to date. We download files from [Geofabrik](http://download.geofabrik.de/north-america/us/massachusetts.html),
+which gets updates only once per day, so you may need to wait up to 24 hours to pull any OSM changes you've made.
 
 ## Updating OTP from upstream
 
