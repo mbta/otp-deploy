@@ -1,5 +1,6 @@
 {
-    "otpFeatures" : {
-        "ActuatorAPI" : true
-    }
+  "otpFeatures": {
+    "ActuatorAPI": true,
+    "FaresV2": true
+  }
 }
