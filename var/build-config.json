@@ -48,5 +48,8 @@
         "enabled": true
       }
     }
-  ]
+  ],
+  "fares": {
+    "type": "gtfs"
+  }
 }
