@@ -4,12 +4,10 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    branches: ["**"]
 
 permissions: {}
 
 jobs:
-  zizmor:
   zizmor:
     name: security / zizmor
     runs-on: ubuntu-latest
