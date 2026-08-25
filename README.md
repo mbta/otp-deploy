@@ -90,6 +90,25 @@ edit configuration UI then add the flag `-Xmx8G` to increase the JVM memory pool
 If you need to run or debug the build process for some reason, just create another configuration
 with the same values except with program arguments `--build --save ../otp-deploy/var/`.
 
+## Zizmor
+
+We use [Zizmor](https://docs.zizmor.sh/) to ensure that our Github Actions are configured securely. It runs automatically in CI, but if you'd like to run it locally, you can install it with
+
+```bash
+brew install zizmor
+zizmor .
+```
+
+If you have Github CLI tools installed (`brew install gh`), and are logged in (`gh auth login`), then you can get more informative output by running in "Online Mode":
+```bash
+zizmor --gh-token $(gh auth token) .
+```
+
+And you can have it auto-fix what it can with
+```bash
+zizmor --gh-token $(gh auth token) --pedantic --fix=all .
+```
+
 ## Docker
 
 Building and running the docker image locally is usually not necessary, since it's faster to just
