@@ -6,13 +6,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl git ca-cer
 WORKDIR /java/
 
 # Download the JRE for copying to the image to run the OTP server
-RUN curl -Lo jre25.tar.gz https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4%2B7/OpenJDK25U-jre_x64_linux_hotspot_25.0.4_7.tar.gz
+RUN curl -Lo jre25.tar.gz https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_linux_hotspot_25.0.5_8.tar.gz
 RUN tar xvf jre25.tar.gz && rm jre25.tar.gz
 
 # Download the JDK and maven and add them to path for building OTP
-RUN curl -Lo jdk25.tar.gz https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4%2B7/OpenJDK25U-jdk_x64_linux_hotspot_25.0.4_7.tar.gz
+RUN curl -Lo jdk25.tar.gz https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz
 RUN tar xvf jdk25.tar.gz && rm jdk25.tar.gz
-ENV JAVA_HOME=/java/jdk-25.0.4+7/
+ENV JAVA_HOME=/java/jdk-25.0.5+8/
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 RUN curl -Lo maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
@@ -54,10 +54,10 @@ USER otp
 COPY --from=builder --chown=otp:otp /build/otp/otp-shaded/target/otp-shaded-*-SNAPSHOT.jar /dist/otp.jar
 COPY --from=builder --chown=otp:otp /build/var/graph.obj /dist/var/
 COPY --from=builder --chown=otp:otp /build/var/*.json /dist/var/
-COPY --from=builder --chown=otp:otp /java/jdk-25.0.4+7-jre /java/jdk-25.0.4+7-jre
+COPY --from=builder --chown=otp:otp /java/jdk-25.0.5+8-jre /java/jdk-25.0.5+8-jre
 
 # Set the default java install to the JRE that was copied into the image rather than the JDK
-ENV JAVA_HOME="/java/jdk-25.0.4+7-jre"
+ENV JAVA_HOME="/java/jdk-25.0.5+8-jre"
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 ARG MBTA_GTFS_URL=https://mbta-gtfs-s3.s3.amazonaws.com/google_transit.zip
