@@ -20,5 +20,6 @@ jobs:
     with:
       deployment-env: prod
     secrets:
-      aws-role-arn: ${{ secrets.AWS_ROLE_ARN }}
-      docker-repo: ${{ secrets.DOCKER_REPO }}
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

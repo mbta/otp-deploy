@@ -13,6 +13,16 @@ on:
         description: "Environment to deploy to: prod, dev, dev-green, dev-blue"
         type: string
         required: true
+    secrets:
+      AWS_ROLE_ARN:
+        description: "AWS role to assume for building and deploying"
+        required: true
+      DOCKER_REPO:
+        description: "ECR repository for the deployment image"
+        required: true
+      SLACK_WEBHOOK:
+        description: "Webhook for deployment notifications"
+        required: false
   workflow_dispatch:
     inputs:
       deployment-env:
